@@ -1,0 +1,182 @@
+{**
+ * @param string   $basePath cesta k webovému obsahu např. CSS souborům
+ * @param array    $flashes  pole zpráv
+ *}
+
+<!DOCTYPE html>
+<html lang="cs-cz">
+    <head>
+            <meta charset="UTF-8" />
+            <meta name="description" content="{ifset description}{include description|striptags}{/ifset}" />
+
+            <title>{ifset title}{include title|striptags} | {/ifset}BeCreate - proffessional design</title>                               
+
+            {block css}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta name="author" content="František Kaša" />
+            <link rel="icon" type="image/png" sizes="32x32" href="{$basePath}/images/be/logo/favicon.png">
+            
+            <!-- BOOTSTRAP STYLES-->
+            <link href="{$basePath}/css/bootstrap/bootstrap.css" rel="stylesheet" />
+            <!-- FONTAWESOME STYLES-->
+            <link href="{$basePath}/font-awesome/font-awesome.css" rel="stylesheet" />
+            <!-- BASE styles -->
+            <link href="{$basePath}/css/template.css" rel="stylesheet" />
+            <!-- MORRIS CHART STYLES-->
+            <link href="{$basePath}/js/be/morris/morris-0.4.3.min.css" rel="stylesheet" />
+            <!-- Backend style --> 
+            <link href="{$basePath}/css/backend-styles.css" rel="stylesheet" />
+            <!-- DataTables -->
+            <link rel="stylesheet" type="text/css" href="{$basePath}/css/dataTables/jquery.dataTables.css" />
+            <link rel="stylesheet" type="text/css" href="{$basePath}/css/dataTables/dataTables.bootstrap.css" />
+            <!--[if lt IE 9]>
+            <script src="{$basePath}/js/resspond/html5shiv.js"></script>
+            <script src="{$basePath}/js/resspond/respond.min.js"></script>
+            <![endif]-->
+            {/block}
+
+            {block head}{/block}
+    </head>
+
+    <body>
+        
+        <div id="wrapper">
+            <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" n:href="Administrator:"><img class="img-responsive becreate-logo" src="{$basePath}/images/be/logo/becreate_logo.png" /></a> 
+                </div>
+                <div class="last-access"> Last access : 30 May 2014 &nbsp; {if $user->loggedIn}<a n:href="Sign:out" class="btn btn-danger square-btn-adjust">Logout</a>{/if} </div>
+            </nav>   
+            <!-- /. NAV TOP  -->
+            <nav class="navbar-default navbar-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="main-menu">
+                        <li class="text-center">
+                            <img src="{$basePath}/images/be/symboly/find_user.png" class="user-image img-responsive"/>
+                        </li>                       
+                        <li>
+                            <a {ifCurrent Administrator:}class="active-menu"{/ifCurrent} n:href="Administrator:"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
+                        </li>
+                        {*<li>
+                            <a {ifCurrent Post:}class="active-menu"{/ifCurrent} n:href="Post:default"><i class="fa fa-tasks fa-3x"></i> Příspěvky</a>
+                        </li>*}
+                        {*<li>
+                            <a {ifCurrent Article:list}class="active-menu"{/ifCurrent} n:href="Article:list"><i class="fa fa-tasks fa-3x"></i> Články</a>
+                        </li>*}
+                        {*<li>
+                            <a href="#"><i class="fa fa-list fa-3x"></i> Články<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a n:href="Article:create">Přidat článek</a>
+                                </li>
+                                <li>
+                                    <a n:href="Article:default">Zobrazit články</a>
+                                </li>
+                            </ul>
+                        </li>*}
+                        <li>
+                            <a {ifCurrent Sign:in}class="active-menu"{/ifCurrent} n:href="Sign:in"><i class="fa fa-sign-in fa-3x"></i> Přihlášení</a>
+                        </li>
+                        <li>
+                            <a {ifCurrent Sign:up}class="active-menu"{/ifCurrent} n:href="Sign:up"><i class="fa fa-sign-out fa-3x"></i> Registrace</a>
+                        </li>
+                        <li>
+                            <a href="{$baseUri}" target="_blank"><i class="fa fa-home fa-3x"></i> Zobrazit web</a>
+                        </li>
+                        <li>
+                            <a {ifCurrent Menu:}class="active-menu"{/ifCurrent}><i class="fa fa-bars fa-3x"></i> Menu<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a n:href="Menu:create">Přidat položku menu</a>
+                                </li>
+                                <li>
+                                    <a n:href="Menu:default">Zobrazit položky menu</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {*<li>
+                            <a href="#"><i class="fa fa fa-plus-square fa-3x"></i> Produkty<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a n:href="Product:create">Přidat produkt</a>
+                                </li>
+                                <li>
+                                    <a n:href="Product:default">Zobrazit produkty</a>
+                                </li>                               
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-3x"></i> Kategorie<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a n:href="Category:create">Přidat kategorii</a>
+                                </li>
+                                <li>
+                                    <a n:href="Category:default">Výpis kategorií</a>
+                                </li>                               
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-picture-o fa-3x"></i> Fotogalerie<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a n:href="Photogallery:create">Přidat galerii</a>
+                                </li>
+                                <li>
+                                    <a n:href="Photogallery:default">Výpis fotogalerií</a>
+                                </li>                               
+                            </ul>
+                        </li> *}
+                    </ul>
+                </div>
+            </nav>  
+            <!-- /. NAV SIDE  -->
+            <div id="page-wrapper" >
+                <div id="page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {* Výpis zpráv. *}
+                            <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+                            
+                            {include #content}
+                            
+                        </div>
+                    </div>              
+                    <!-- /. ROW  -->
+                    <hr />
+                    {ifset dashboard}{include #dashboard}{/ifset}
+                </div>
+                <!-- /. PAGE INNER  -->
+            </div>
+            <!-- /. PAGE WRAPPER  -->
+        </div>
+        <!-- /. WRAPPER  -->
+        
+
+        {block scripts}
+        <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+        <script src="{$basePath}/js/jquery-1.11.3.min.js"></script>
+        <!-- BOOTSTRAP SCRIPTS -->
+        <script src="{$basePath}/js/bootstrap.min.js"></script>
+        <!-- NETTE SCRIPTS -->
+        <script src="{$basePath}/js/netteForms.min.js"></script>
+        <script src="{$basePath}/js/main.js"></script>
+        <!-- METISMENU SCRIPTS -->
+        <script src="{$basePath}/js/be/jquery.metisMenu.js"></script>
+        <!-- MORRIS CHART SCRIPTS -->
+        <script src="{$basePath}/js/be/morris/raphael-2.1.0.min.js"></script>
+        <script src="{$basePath}/js/be/morris/morris.js"></script>
+        <!-- CUSTOM SCRIPTS -->
+        <script src="{$basePath}/js/be/custom.js"></script>
+        <!-- DataTables -->
+        <script src="{$basePath}/js/dataTables/jquery.dataTables.js"></script>
+        <script src="{$basePath}/js/dataTables/dataTables.bootstrap.js"></script>
+        {/block}        
+    </body>
+</html>
