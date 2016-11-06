@@ -1,0 +1,1 @@
+Presenter pro vykreslení šablon
