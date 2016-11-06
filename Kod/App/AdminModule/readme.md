@@ -1,0 +1,1 @@
+Administrační část pohledu
