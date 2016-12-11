@@ -1,0 +1,1 @@
+Články - šablona
