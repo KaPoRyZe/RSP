@@ -1,0 +1,1 @@
+Modely - propojení s databází
