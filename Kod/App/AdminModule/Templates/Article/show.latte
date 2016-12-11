@@ -1,0 +1,9 @@
+{* Latte template *}
+{block #title}{ifset $article->title}{$article->title|noescape}{/ifset}{/block}
+{block #description}{ifset $article->description}{$article->description|noescape}{/ifset}{/block}
+
+{block content}
+    {$article->title|noescape}
+    <hr>
+    <p><a n:href="default">← zpět na výpis</a></p>
+    {$article->content|noescape}
