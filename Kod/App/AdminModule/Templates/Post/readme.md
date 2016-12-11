@@ -1,0 +1,1 @@
+Příspěvky - šablona
