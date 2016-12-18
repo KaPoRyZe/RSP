@@ -1,0 +1,28 @@
+{* Latte template *}
+
+{block content}
+<div class="col-md-12">
+    <p><a n:href="Administrator:">← zpět na úvodní stránku</a></p>
+    <h1 n:block="title">Příspěvky</h1>
+    
+    <h4><a n:href="create">Napsat nový příspěvek</a></h4>
+
+    <table class="table table-responsive">
+        <thead>
+            <th>Název</th>
+            <th>Obsah</th>
+            <th>Datum</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr n:foreach="$posts as $post">
+                <td><a n:href="show $post->id">{$post->title}</a></td>
+                <td>{$post->content}</td>
+                <td>{$post->created_at|date:'F j, Y'}</td>
+                <td><a n:href="Post:remove $post->id">Odstranit</a></td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+    
