@@ -1,0 +1,36 @@
+{* Latte template *}
+
+{block content}
+<div class="col-md-12">
+    <h1>Přehled uživatelů v databázi</h1>
+
+    {ifset $users}
+        <table id="table_users" class="table table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Poslední přihlášení</th>
+
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <form class="form form-group" action="/becreate/administrator/user/" method="post">
+                <tr n:foreach="$users as $user">
+                    <td>{$user->id}</td>
+                    <td>{$user->username}</td>
+                    <td>{$user->email}</td>
+                    <td>{$user->role}</td>
+                    <td>{$user->last_access}</td>
+                    <td><a n:href="User:edit $user->id"><span class="fa fa-edit"></span></a></td>
+                    <td><a n:href="delete $user->id"><span class="fa fa-trash-o"></span></a></td>
+                </tr>
+            </form>
+            </tbody>
+        </table>
+    {/ifset}
+</div>
