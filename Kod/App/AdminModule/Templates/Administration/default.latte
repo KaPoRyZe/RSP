@@ -1,0 +1,54 @@
+{* Latte template *}
+
+{block content}
+<h1>Vítejte v administraci</h1>
+{/block}
+{block dashboard}
+<div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-6">           
+        <div class="panel panel-back noti-box">
+            <span class="icon-box bg-color-red set-icon">
+                <i class="fa fa-list"></i>
+            </span>
+            <div class="text-box" >
+                <p class="main-text">{if $countarticle}{$countarticle}{else}0{/if} Články</p>
+                <p class="text-muted"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-6">           
+        <div class="panel panel-back noti-box">
+            <span class="icon-box bg-color-green set-icon">
+                <i class="fa fa-tasks"></i>
+            </span>
+            <div class="text-box" >
+                <p class="main-text">{if $countpost}{$countpost}{else}0{/if} Příspěvky</p>
+                <p class="text-muted"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-6">           
+        <div class="panel panel-back noti-box">
+            <span class="icon-box bg-color-blue set-icon">
+                <i class="fa fa-bars"></i>
+            </span>
+            <div class="text-box" >
+                <p class="main-text">{if $menus}{count($menus)}{else}0{/if} Menu</p>
+                <p class="text-muted"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-6">           
+        <div class="panel panel-back noti-box">
+            <span class="icon-box bg-color-brown set-icon">
+                <i class="fa fa-plus-square"></i>
+            </span>
+            <div class="text-box" >
+                <p class="main-text">{if $countproduct}{$countproduct}{else}0{/if} Produkty</p>
+                <p class="text-muted"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /. ROW  -->
+{/block}
