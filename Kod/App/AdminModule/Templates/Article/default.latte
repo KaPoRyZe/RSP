@@ -3,14 +3,37 @@
 {block #description}{/block}
 
 {block content}
-<table class="table">
-    <tr n:foreach="$articles as $article">
-        <td>
-            <a n:href="Article:show $article->article_id">{$article->title|noescape}</a>
-            <span>Stránka: {$article->titlePage}</span>
-            <p>{$article->description|noescape}</p>
-            <a n:href="Article:edit $article->article_id">Editovat</a>
-            <a n:href="Article:remove $article->article_id">Odstranit</a>
-        </td>
-    </tr>
-</table>
+<div class="col-md-12">
+    <table class="table table-responsive">
+        <thead>
+            <th>Název</th>
+            <th>Podnadpis</th>
+            <th>Obsah</th>
+            <th>Datum</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr n:foreach="$articles as $article">
+                <td>
+                    <a n:href="Article:show $article->article_id">{$article->title|noescape}</a>
+                </td>
+                <td>
+                    {$article->description}
+                </td>
+                <td>
+                    <p>{$article->content|noescape}</p>
+                </td>
+                <td>
+                    {$article->titlePage}
+                </td>
+                <td>
+                    <a n:href="Article:edit $article->article_id">Editovat</a>
+                </td>
+                <td>
+                    <a n:href="Article:remove $article->article_id">Odstranit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
