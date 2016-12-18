@@ -9,32 +9,34 @@
 {block #description}{/block}
 
 {block content}
-<h1>Výpis položek menu</h1>
-<hr>
+<div class="col-md-12">
+    <h1>Výpis položek menu</h1>
+    <hr>
 
-<table id="table_menu" class="display">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Název</th>
-            <th>URL</th>
-            <th>Pořadí</th>
+    <table id="table_menu" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Název</th>
+                <th>URL</th>
+                <th>Pořadí</th>
 
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <form class="form" action="#" method="post">
-            <tr n:foreach="$menus as $menu">
-                <td>{$menu->id}</td>
-                <td>{$menu->name}</td>
-                <td>{$menu->url}</td>
-                <td>{$menu->order}</td>
-
-                <td><a n:href="Menu:edit $menu->id">Upravit</a></td>
-                <td><a n:href="Menu:remove $menu->id">Odstranit</a></td>
+                <th></th>
+                <th></th>
             </tr>
-        </form>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <form class="form" action="#" method="post">
+                <tr n:foreach="$menus as $menu">
+                    <td>{$menu->id}</td>
+                    <td>{$menu->name}</td>
+                    <td>{$menu->url}</td>
+                    <td>{$menu->order}</td>
+
+                    <td><a n:href="Menu:edit $menu->id">Upravit</a></td>
+                    <td><a n:href="Menu:remove $menu->id">Odstranit</a></td>
+                </tr>
+            </form>
+        </tbody>
+    </table>
+</div>
