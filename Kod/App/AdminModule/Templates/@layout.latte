@@ -51,26 +51,31 @@
                     </button>
                     <a class="navbar-brand" n:href="Administrator:"><img class="img-responsive becreate-logo" src="{$basePath}/images/be/logo/becreate_logo.png" /></a> 
                 </div>
-                <div class="last-access"> Last access : 30 May 2014 &nbsp; {if $user->loggedIn}<a n:href="Sign:out" class="btn btn-danger square-btn-adjust">Logout</a>{/if} </div>
+                    <div n:if="$user->loggedIn && $userdb" class="last-access"> Naposled přihlášen : {$userdb->last_access|date:'%d.%m.%Y %H:%M'} &nbsp; {if $user->loggedIn}<a n:href="Sign:out" class="btn btn-danger square-btn-adjust">Logout</a>{/if} </div>
             </nav>   
             <!-- /. NAV TOP  -->
             <nav class="navbar-default navbar-side" role="navigation">
                 <div class="sidebar-collapse">
                     <ul class="nav" id="main-menu">
                         <li class="text-center">
-                            <img src="{$basePath}/images/be/symboly/find_user.png" class="user-image img-responsive"/>
+                            {if $user->loggedIn}
+                                <img src="{$basePath}/images/be/symboly/find_user.png" class="user-image img-responsive"/>
+                                <p>{$userdb->username}</p>
+                            {else}
+                                <img src="{$basePath}/images/be/symboly/user_help.png" class="user-image img-responsive"/>
+                            {/if}
                         </li>                       
-                        <li>
+                         <li n:if="$user->loggedIn">
                             <a {ifCurrent Administrator:}class="active-menu"{/ifCurrent} n:href="Administrator:"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
                         </li>
-                        {*<li>
+                         <li n:if="$user->loggedIn && $user->isInRole('admin')">
+                            <a {ifCurrent User:}class="active-menu"{/ifCurrent} n:href="User:"><i class="fa fa-users fa-3x"></i> Uživatelé</a>
+                        </li>
+                        <li n:if="$user->loggedIn">
                             <a {ifCurrent Post:}class="active-menu"{/ifCurrent} n:href="Post:default"><i class="fa fa-tasks fa-3x"></i> Příspěvky</a>
-                        </li>*}
-                        {*<li>
-                            <a {ifCurrent Article:list}class="active-menu"{/ifCurrent} n:href="Article:list"><i class="fa fa-tasks fa-3x"></i> Články</a>
-                        </li>*}
-                        {*<li>
-                            <a href="#"><i class="fa fa-list fa-3x"></i> Články<span class="fa arrow"></span></a>
+                        </li>
+                        <li n:if="$user->loggedIn">
+                            <a {ifCurrent Article:}class="active-menu"{/ifCurrent} href="#"><i class="fa fa-list fa-3x"></i> Články<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a n:href="Article:create">Přidat článek</a>
@@ -79,17 +84,17 @@
                                     <a n:href="Article:default">Zobrazit články</a>
                                 </li>
                             </ul>
-                        </li>*}
-                        <li>
+                        </li>
+                        <li n:if="!$user->loggedIn || $user->isInRole('admin')">
                             <a {ifCurrent Sign:in}class="active-menu"{/ifCurrent} n:href="Sign:in"><i class="fa fa-sign-in fa-3x"></i> Přihlášení</a>
                         </li>
-                        <li>
+                         <li n:if="$user->loggedIn && $user->isInRole('admin')">
                             <a {ifCurrent Sign:up}class="active-menu"{/ifCurrent} n:href="Sign:up"><i class="fa fa-sign-out fa-3x"></i> Registrace</a>
                         </li>
-                        <li>
+                        <li n:if="$user->loggedIn">
                             <a href="{$baseUri}" target="_blank"><i class="fa fa-home fa-3x"></i> Zobrazit web</a>
                         </li>
-                        <li>
+                        <li n:if="$user->loggedIn">
                             <a {ifCurrent Menu:}class="active-menu"{/ifCurrent}><i class="fa fa-bars fa-3x"></i> Menu<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -100,7 +105,7 @@
                                 </li>
                             </ul>
                         </li>
-                        {*<li>
+                        <li n:if="$user->loggedIn">
                             <a href="#"><i class="fa fa fa-plus-square fa-3x"></i> Produkty<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -111,7 +116,7 @@
                                 </li>                               
                             </ul>
                         </li>
-                        <li>
+                        <li n:if="$user->loggedIn">
                             <a href="#"><i class="fa fa-sitemap fa-3x"></i> Kategorie<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -122,7 +127,7 @@
                                 </li>                               
                             </ul>
                         </li>
-                        <li>
+                        <li n:if="$user->loggedIn">
                             <a href="#"><i class="fa fa-picture-o fa-3x"></i> Fotogalerie<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -132,7 +137,7 @@
                                     <a n:href="Photogallery:default">Výpis fotogalerií</a>
                                 </li>                               
                             </ul>
-                        </li> *}
+                        </li>
                     </ul>
                 </div>
             </nav>  
@@ -142,15 +147,24 @@
                     <div class="row">
                         <div class="col-md-12">
                             {* Výpis zpráv. *}
-                            <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-                            
+                            <div id="flashes" n:foreach="$flashes as $flash" class="alert alert-{$flash->type} alert-dismissable">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>{$flash->type}!</strong>&nbsp;{$flash->message}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
                             {include #content}
                             
-                        </div>
-                    </div>              
+                    </div>                                
                     <!-- /. ROW  -->
                     <hr />
-                    {ifset dashboard}{include #dashboard}{/ifset}
+                    {ifset dashboard}
+                        <div class="dashboard">
+                            {include #dashboard}
+                        </div>
+                    {/ifset}
                 </div>
                 <!-- /. PAGE INNER  -->
             </div>
