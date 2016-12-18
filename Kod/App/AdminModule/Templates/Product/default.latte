@@ -1,0 +1,41 @@
+{* Latte template *}
+{block title}Výpis produktů{/block}
+
+{block content}
+<div class="col-md-12">
+    <h1>Výpis všech produktů</h1>
+    <hr>
+
+    <table id="table_product" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Kod</th>
+                <th>Název</th>
+                <th>Množství</th>
+                <th>Cena</th>
+                <th>Dostupnost</th>
+                <th>Akce</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <form class="form" action="#" method="post">
+                <tr n:foreach="$products as $product">
+                    <td>{$product->id}</td>
+                    <td>{$product->kod}</td>
+                    <td><a n:href="Product:show $product->id">{$product->nazev}</a></td>
+                    <td>{$product->mnozstvi}</td>
+                    <td>{$product->cena}</td>           
+                    <td>{$product->dostupnost ? 'Skladem' : 'Není dostupné'}</td>
+                    <td>{$product->akce ? 'V akci' : 'Není v akci'}</td>
+
+                    <td><a n:href="Product:edit $product->id">Upravit</a></td>
+                    <td><a n:href="Product:remove $product->id">Odstranit</a></td>
+                </tr>
+            </form>
+        </tbody>
+    </table>
+</div>
