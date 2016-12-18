@@ -1,0 +1,16 @@
+{* Latte template *}
+{block #title}{/block}
+{block #description}{/block}
+
+{block content}
+<table class="table">
+    <tr n:foreach="$articles as $article">
+        <td>
+            <a n:href="Article:show $article->article_id">{$article->title|noescape}</a>
+            <span>Stránka: {$article->titlePage}</span>
+            <p>{$article->description|noescape}</p>
+            <a n:href="Article:edit $article->article_id">Editovat</a>
+            <a n:href="Article:remove $article->article_id">Odstranit</a>
+        </td>
+    </tr>
+</table>
